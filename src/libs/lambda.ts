@@ -15,6 +15,7 @@ export const middyfy = (handler, inputSchema?: Record<string, any>, outputSchema
     )
     .use(
       httpResponseSerializer({
+        defaultContentType: "application/json",
         serializers: [
           {
             regex: /^application\/json$/,
@@ -25,7 +26,6 @@ export const middyfy = (handler, inputSchema?: Record<string, any>, outputSchema
             serializer: ({ body }) => body,
           },
         ],
-        default: "application/json",
       })
     )
     .use(httpErrorHandler());

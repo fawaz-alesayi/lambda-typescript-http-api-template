@@ -7,7 +7,7 @@ import InputSchema from "./inputSchema";
 
 // You may also pass an output schema as a second type parameter for type-checking.
 // const hello: LambdaHandler<typeof InputSchema typeof OutputSchema> ...
-const hello: LambdaHandler<typeof InputSchema> = async (
+const hello: LambdaHandler<typeof InputSchema, {}> = async (
   event
 ) => {
   return {

@@ -4,18 +4,18 @@ import hello from '@functions/hello';
 
 const serverlessConfiguration: AWS = {
   service: 'aws-nodejs-typescript-http-api',
-  frameworkVersion: '2',
+  frameworkVersion: '3',
   configValidationMode: 'error',
   custom: {
-    webpack: {
-      webpackConfig: './webpack.config.js',
-      includeModules: true,
-    },
+    // esbuild: {
+    //   bundle: true,
+    //   minify: true,
+    // },
   },
-  plugins: ['serverless-webpack'],
+  plugins: ['serverless-esbuild'],
   provider: {
     name: 'aws',
-    runtime: 'nodejs14.x',
+    runtime: 'nodejs16.x',
     apiGateway: {
       minimumCompressionSize: 1024,
       shouldStartNameWithService: true,
@@ -23,7 +23,6 @@ const serverlessConfiguration: AWS = {
     environment: {
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1',
     },
-    lambdaHashingVersion: '20201221',
   },
   // import the function via paths
   functions: { hello },

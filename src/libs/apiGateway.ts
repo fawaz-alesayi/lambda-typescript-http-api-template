@@ -3,14 +3,14 @@ import type {
   APIGatewayProxyResult,
   Handler,
 } from "aws-lambda";
-import type { FromSchema } from "json-schema-to-ts";
+import type { FromSchema, JSONSchema7 } from "json-schema-to-ts";
 
-type ValidatedAPIGatewayProxyEvent<InputSchema> = Omit<APIGatewayProxyEvent, "body"> & Required<FromSchema<InputSchema>>
+type ValidatedAPIGatewayProxyEvent<InputSchema extends JSONSchema7> = Omit<APIGatewayProxyEvent, "body"> & Required<FromSchema<InputSchema>>
 
 // This type is sound because we are sure that the reponse body will be serialized by @middy/http-response-serializer
-type SerializedAPIGatewayProxyResult<OutputSchema> = Omit<APIGatewayProxyResult, "body"> & Required<FromSchema<OutputSchema>>;
+type SerializedAPIGatewayProxyResult<OutputSchema extends JSONSchema7> = Omit<APIGatewayProxyResult, "body"> & Required<FromSchema<OutputSchema>>;
 
-export type LambdaHandler<InputSchema, OutputSchema = void> = Handler<
+export type LambdaHandler<InputSchema extends JSONSchema7, OutputSchema extends JSONSchema7> = Handler<
   ValidatedAPIGatewayProxyEvent<InputSchema>,
   SerializedAPIGatewayProxyResult<OutputSchema>
 >;
